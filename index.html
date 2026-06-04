@@ -177,6 +177,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Ambient background canvas with high z-index to stay above solid backgrounds */
         #ambient-canvas {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -879,7 +880,7 @@
 <body>
 
     <!-- INVISIBLE AUDIO PLAYER FOR CAKE SECTION -->
-    <audio id="bday-audio" src="happy-birthday.mp3" loop></audio>
+    <audio id="bday-audio" src="happy-birthday.mp3.mpeg" loop></audio>
 
     <div id="sky-flash-overlay"></div>
     <canvas id="ambient-canvas"></canvas>
@@ -999,7 +1000,7 @@
                 <div class="washi-tape"></div>
                 <div class="polaroid" style="--r: -2deg;">
                     
-                    <!-- NEW VIDEO TAG REPLACING THE IMAGE -->
+                    <!-- VIDEO TAG -->
                     <video src="my-video.mp4" autoplay loop playsinline controls style="width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: 2px;"></video>
                     
                     <div class="polaroid-caption">Where It All Began</div>
@@ -1127,7 +1128,6 @@
     <section id="ending-section">
         <div class="interactive-layer" style="max-width: 500px;" id="ending-entrance-container">
             
-            <!-- Shooting Star and Burst Layout -->
             <div class="star-animation-container">
                 <div class="falling-star">
                     <div class="star-sparkle s1"></div>
@@ -1139,7 +1139,6 @@
                 <div class="revealed-hbd">Happy Birthday</div>
             </div>
             
-            <!-- Once Again Happy Birthday Message -->
             <div class="final-message-box" style="margin-top: 40px; opacity: 0; animation: stageFadeIn 2s ease forwards 2.5s; text-align: center;">
                 <h2 class="serif-heading" style="color: #ffffff; font-size: 2.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Once again, Happy 20th Birthday! 🎉</h2>
                 <p style="color: #e0dce6; font-size: 1.05rem; margin-top: 15px; font-style: italic; line-height: 1.6; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
@@ -1167,7 +1166,6 @@
             elem.addEventListener('click', () => triggerHaptic('light'));
         });
 
-        /* Global Canvas Render Layer Engine */
         const ambientCanvas = document.getElementById('ambient-canvas');
         const actx = ambientCanvas.getContext('2d');
         let ambientParticles = [];
@@ -1253,7 +1251,6 @@
         }
         runAmbientEngine();
 
-        /* Massive Golden Sky Burst syncing with exact burst element coords */
         function triggerSkyBurst(x, y) {
             triggerHaptic('heavy');
             for(let i=0; i<120; i++) {
@@ -1269,9 +1266,7 @@
             }
         }
 
-        /* Global Stage Routing Coordinate Logic */
         function routeTo(stageId) {
-            // SILENCES ALL AUDIO AND VIDEO UPON PAGE NAVIGATION
             document.querySelectorAll('video, audio').forEach(media => media.pause());
 
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
@@ -1295,7 +1290,6 @@
                 canvasMode = 'default';
                 for(let i=0; i<25; i++) ambientParticles.push(new AmbientParticle(null, null, 'sparkle'));
                 
-                // STARTS BIRTHDAY MUSIC AUTOMATICALLY WHEN REACHING THE CAKE
                 const bdayMusic = document.getElementById('bday-audio');
                 if (bdayMusic) {
                     bdayMusic.currentTime = 0;
@@ -1322,7 +1316,6 @@
             }
         }
 
-        /* SECTION 1: TIMELINE RUNNER */
         let currentYear = 1;
         const progressBar = document.getElementById('intro-progress-bar');
         const movingNode = document.getElementById('intro-moving-node');
@@ -1373,7 +1366,6 @@
             }, 50);
         }
 
-        /* SECTION 2: WISH PRESS ENGINE */
         let wishTimer = null;
         let wishProgress = 0;
         const holdCircle = document.getElementById('hold-circle');
@@ -1433,7 +1425,6 @@
             wishNextBtn.style.display = 'inline-flex';
         }
 
-        /* SECTION 3: RECONFIGURED CANVAS DIMENSIONS, CENTERING COORDINATES & FIRECRACKER AESTHETICS */
         const cakeCanvas = document.getElementById('cake-canvas');
         cakeCanvas.width = 400;
         cakeCanvas.height = 520;
